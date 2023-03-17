@@ -43,7 +43,7 @@ app.get("/states/", async (req, res) => {
   try {
     const getStatesQuery = `SELECT * FROM state ORDER BY state_id;`;
     const statesArr = await db.all(getStatesQuery);
-    console.log(statesArr.map((obj) => turnStateToResponseObj(obj)));
+    res.send(statesArr.map((obj) => turnStateToResponseObj(obj)));
   } catch (err) {
     console.log(err.message);
   }
