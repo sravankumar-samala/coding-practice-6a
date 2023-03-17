@@ -41,10 +41,19 @@ const turnStateToResponseObj = (obj) => {
 
 app.get("/states/", async (req, res) => {
   try {
-    const getStatesQuery = `SELECT * FROM state ORDER BY state_id;`;
+    const getStatesQuery = `SELECT * FROM state;`;
     const statesArr = await db.all(getStatesQuery);
     res.send(statesArr.map((obj) => turnStateToResponseObj(obj)));
   } catch (err) {
     console.log(err.message);
   }
+});
+
+app.get("/states/:Id/", async (req, res) => {
+  const stateID = req.params.Id;
+  const Query = `
+    SELECT * FROM state WHERE state_id = ${stateId};
+    `;
+  const state = db.get(Query);
+  res.send(state);
 });
